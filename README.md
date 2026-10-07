@@ -2,6 +2,23 @@
 
 natural-language schedule expressions parser and resolved into standard 5-field cron strings for the scheduler daemon.
 
+## Usage
+
+```rust
+use crontext::parse;
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let schedule = parse("every 15 minutes")?;
+    println!("Cron: {}", schedule.cron); // "*/15 * * * *"
+    println!("Description: {}", schedule.description); // "every 15 minutes"
+
+    let schedule = parse("every mon, wed and fri at 06:30")?;
+    println!("Cron: {}", schedule.cron); // "30 6 * * 1,3,5"
+
+    Ok(())
+}
+```
+
 ## Supported Expressions
 
 | Natural expression | Equivalent 5-field cron |
